@@ -2,7 +2,7 @@ name: pyFIRS
 channels:
   - conda-forge
 dependencies:
-  - dask=0.19
+  - dask=1.0
   - geopandas=0.4
   - matplotlib=2.2
   - numpy=1.15
@@ -17,5 +17,24 @@ dependencies:
   - seaborn=0.9
   - shapely=1.6
 
-
-prefix: /Users/daviddiaz/anaconda3/envs/pyFIRS
+  - xarray
+  - distributed
+  - dask-kubernetes
+  - gcsfs
+  - intake::intake-xarray
+  - zarr
+  - numcodes
+  - python-blosc
+  - lz4
+  - nomkl
+  - nbserverproxy
+  - jupyter
+  - jupyterlab=0.35
+  - jupyterlab_launcher
+  - jupyter_client
+  - ipywidgets
+  - graphviz
+  - nodejs
+  - pip:
+    - kubernetes
+    - graphviz
