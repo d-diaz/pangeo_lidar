@@ -1,0 +1,72 @@
+# Editor temporary/working/backup files #
+#########################################
+.#*
+[#]*#
+*~
+*$
+*.bak
+.idea/*
+*.kdev4
+*.org
+.project
+.pydevproject
+*.rej
+.settings/
+.*.sw[nop]
+.sw[nop]
+*.tmp
+*.vim
+tags
+*checkpoint.ipynb
+
+
+# Compiled source #
+###################
+*.a
+*.com
+*.class
+*.dll
+*.exe
+*.l[ao]
+*.o
+*.o.d
+*.py[ocd]
+*.so
+_configtest.c
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.bz2
+*.bzip2
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.tbz2
+*.tgz
+*.zip
+
+# Python files #
+################
+# setup.py working directory
+build
+# sphinx build directory
+doc/_build
+# setup.py dist directory
+dist
+# Egg metadata
+*.egg-info
+# other temporary files
+.coverage
+.deps
+.libs
+.eggs
+
+# Things specific to this project #
+###################################
+examples/.ipynb_checkpoints
