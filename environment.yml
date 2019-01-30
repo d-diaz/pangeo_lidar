@@ -16,14 +16,13 @@ dependencies:
   - scikit-learn=0.20
   - seaborn=0.9
   - shapely=1.6
-
   - xarray
   - distributed
   - dask-kubernetes
   - gcsfs
   - intake::intake-xarray
   - zarr
-  - numcodes
+  - numcodecs
   - python-blosc
   - lz4
   - nomkl
