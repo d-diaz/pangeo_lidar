@@ -58,6 +58,11 @@ ENV PATH /opt/conda/envs/pyFIRS/bin:$PATH
 # install pyFIRS in development mode
 RUN pip install --no-cache-dir -e ${HOME}
 
+USER root
+RUN chown -R ${NB_UID} ${HOME}
+RUN chown -R /opt/conda/envs/pyFIRS
+USER ${NB_USER}
+
 # pangeo-related configuration for jupyter
 RUN jupyter serverextension enable --py nbserverproxy --sys-prefix
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager \
@@ -78,7 +83,3 @@ RUN jupyter lab workspaces import ${HOME}/binder/jupyterlab-workspace.json \
   --NotebookApp.base_url=user/${JUPYTERHUB_USER}
 
 RUN exec "$@"
-
-USER root
-RUN chown -R ${NB_UID} ${HOME}
-USER ${NB_USER}
