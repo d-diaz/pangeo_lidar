@@ -60,7 +60,7 @@ RUN pip install --no-cache-dir -e ${HOME}
 
 # pangeo-related configuration for jupyter
 RUN jupyter serverextension enable --py nbserverproxy --sys-prefix
-RUN labextension install @jupyter-widgets/jupyterlab-manager \
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager \
     @jupyterlab/hub-extension@0.12 \
     @pyviz/jupyterlab_pyviz \
     jupyter-leaflet \
