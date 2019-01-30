@@ -60,7 +60,7 @@ RUN pip install --no-cache-dir -e ${HOME}
 
 USER root
 RUN chown -R ${NB_UID} ${HOME}
-RUN chown -R /opt/conda/envs/pyFIRS
+RUN chown -R ${NB_UID} /opt/conda/envs/pyFIRS
 USER ${NB_USER}
 
 # pangeo-related configuration for jupyter
