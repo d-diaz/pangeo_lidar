@@ -1,8 +1,8 @@
 FROM continuumio/miniconda3:4.5.12
 
 # Configuration required for using Binder
-ENV JUPYTERHUB_USER id -un
-ENV JUPYTERHUB_USER_ID id -u
+ENV JUPYTERHUB_USER 'id -un'
+ENV JUPYTERHUB_USER_ID 'id -u'
 ENV HOME /home/${JUPYTERHUB_USER}
 
 # create the notebook user
