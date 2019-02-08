@@ -1,15 +1,15 @@
 FROM continuumio/miniconda3:4.5.12
 
 # Configuration required for using Binder
-ENV NB_USER jovyan
-ENV NB_UID 1000
-ENV HOME /home/${NB_USER}
+ENV JUPYTERHUB_USER id -un
+ENV JUPYTERHUB_USER_ID id -u
+ENV HOME /home/${JUPYTERHUB_USER}
 
-# create the notebook user jovyan
+# create the notebook user
 RUN adduser --disabled-password \
     --gecos "Default user" \
-    --uid ${NB_UID} \
-    ${NB_USER}
+    --uid ${JUPYTERHUB_USER_ID} \
+    ${JUPYTERHUB_USER}
 
 # Install some linux tools
 RUN apt-get update \
@@ -59,9 +59,9 @@ ENV PATH /opt/conda/envs/pyFIRS/bin:$PATH
 RUN pip install --no-cache-dir -e ${HOME}
 
 USER root
-RUN chown -R ${NB_UID} ${HOME}
-RUN chown -R ${NB_UID} /opt/conda/envs/pyFIRS
-USER ${NB_USER}
+RUN chown -R ${JUPYTERHUB_USER_ID} ${HOME}
+RUN chown -R ${JUPYTERHUB_USER_ID} /opt/conda/envs/pyFIRS
+USER ${JUPYTERHUB_USER}
 
 # pangeo-related configuration for jupyter
 RUN jupyter serverextension enable --py nbserverproxy --sys-prefix
@@ -71,4 +71,13 @@ RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager \
     jupyter-leaflet \
     dask-labextension
 
-ENTRYPOINT ['${HOME}/binder/start']
+# Replace DASK_DASHBOARD_URL with the proxy location
+sed -i -e "s|DASK_DASHBOARD_URL|/user/${JUPYTERHUB_USER}/proxy/8787|g" \
+  {HOME}/binder/jupyterlab-workspace.json
+# Get the right workspace ID
+sed -i -e "s|WORKSPACE_ID|/user/${JUPYTERHUB_USER}/lab|g" \
+  {HOME}/binder/jupyterlab-workspace.json
+
+# Import the workspace into JupyterLab
+jupyter lab workspaces import ${HOME}/binder/jupyterlab-workspace.json \
+  --NotebookApp.base_url=user/${JUPYTERHUB_USER}
