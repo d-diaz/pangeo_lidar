@@ -62,24 +62,3 @@ USER root
 RUN chown -R ${NB_UID} ${HOME}
 RUN chown -R ${NB_UID} /opt/conda/envs/pyFIRS
 USER ${NB_USER}
-
-# pangeo-related configuration for jupyter
-RUN jupyter serverextension enable --py nbserverproxy --sys-prefix
-RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager \
-    @jupyterlab/hub-extension@0.12 \
-    @pyviz/jupyterlab_pyviz \
-    jupyter-leaflet \
-    dask-labextension
-
-# Replace DASK_DASHBOARD_URL with the proxy location
-RUN sed -i -e "s|DASK_DASHBOARD_URL|/user/${NB_USER}/proxy/8787|g" \
-    ${HOME}/binder/jupyterlab-workspace.json
-# Get the right workspace ID
-RUN sed -i -e "s|WORKSPACE_ID|/user/${NB_USER}/lab|g" \
-    ${HOME}/binder/jupyterlab-workspace.json
-
-# Import the workspace into JupyterLab
-RUN jupyter lab workspaces import ${HOME}/binder/jupyterlab-workspace.json \
-  --NotebookApp.base_url=user/${NB_USER}
-
-RUN exec "$@"
