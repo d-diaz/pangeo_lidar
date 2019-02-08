@@ -70,17 +70,3 @@ RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager \
     @pyviz/jupyterlab_pyviz \
     jupyter-leaflet \
     dask-labextension
-
-
-# Replace DASK_DASHBOARD_URL with the proxy location
-RUN echo 'sed -i -e "s|DASK_DASHBOARD_URL|/user/${JUPYTERHUB_USER}/proxy/8787|g" \
-  {HOME}/binder/jupyterlab-workspace.json' > ~/.bashrc
-# Get the right workspace ID
-RUN echo 'sed -i -e "s|WORKSPACE_ID|/user/${JUPYTERHUB_USER}/lab|g" \
-  {HOME}/binder/jupyterlab-workspace.json' > ~/.bashrc
-
-# Import the workspace into JupyterLab
-RUN echo 'jupyter lab workspaces import binder/jupyterlab-workspace.json \
-  --NotebookApp.base_url=user/${JUPYTERHUB_USER}' > ~/.bashrc'
-
-RUN echo 'exec "$@"' > ~/.bashrc
