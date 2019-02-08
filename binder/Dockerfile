@@ -62,3 +62,11 @@ USER root
 RUN chown -R ${NB_UID} ${HOME}
 RUN chown -R ${NB_UID} /opt/conda/envs/pyFIRS
 USER ${NB_USER}
+
+# pangeo-related configuration for jupyter
+RUN jupyter serverextension enable --py nbserverproxy --sys-prefix
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager \
+    @jupyterlab/hub-extension@0.12 \
+    @pyviz/jupyterlab_pyviz \
+    jupyter-leaflet \
+    dask-labextension
