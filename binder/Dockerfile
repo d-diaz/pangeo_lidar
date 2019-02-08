@@ -70,3 +70,5 @@ RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager \
     @pyviz/jupyterlab_pyviz \
     jupyter-leaflet \
     dask-labextension
+
+ENTRYPOINT ['${HOME}/binder/start']
