@@ -2,20 +2,20 @@ name: pyFIRS
 channels:
   - conda-forge
 dependencies:
-  - dask=1.0
-  - geopandas=0.4
-  - matplotlib=2.2
-  - numpy=1.15
-  - pandas=0.23
-  - pdal=1.8
-  - python-pdal=2.1
+  - dask
+  - geopandas
+  - matplotlib
+  - numpy
+  - pandas
+  - pdal
+  - python-pdal
   - python>=3.6
-  - rasterio=1.0
-  - rasterstats=0.13
-  - scikit-image=0.14
-  - scikit-learn=0.20
-  - seaborn=0.9
-  - shapely=1.6
+  - rasterio
+  - rasterstats
+  - scikit-image
+  - scikit-learn
+  - seaborn
+  - shapely
   - xarray
   - distributed
   - dask-kubernetes
@@ -28,7 +28,7 @@ dependencies:
   - nomkl
   - nbserverproxy
   - jupyter
-  - jupyterlab=0.35
+  - jupyterlab
   - jupyterlab_launcher
   - jupyter_client
   - ipywidgets

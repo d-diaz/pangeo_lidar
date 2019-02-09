@@ -1,7 +1,6 @@
 FROM continuumio/miniconda3:4.5.12
 
 # Configuration required for using Binder
-ENTRYPOINT ['${HOME}/binder/start']
 ENV NB_USER jovyan
 ENV NB_UID 1000
 ENV HOME /home/${NB_USER}
@@ -15,11 +14,11 @@ RUN adduser --disabled-password \
 # Install some linux tools
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    unzip \
-    software-properties-common \
-    gnupg \
     apt-transport-https \
-    graphviz
+    gnupg \
+    graphviz \
+    software-properties-common \
+    unzip
 
 # Install wine
 RUN dpkg --add-architecture i386 \
@@ -59,15 +58,26 @@ ENV PATH /opt/conda/envs/pyFIRS/bin:$PATH
 # install pyFIRS in development mode
 RUN pip install --no-cache-dir -e ${HOME}
 
-USER root
-RUN chown -R ${NB_UID} ${HOME}
-RUN chown -R ${NB_UID} /opt/conda/envs/pyFIRS
-USER ${NB_USER}
-
 # pangeo-related configuration for jupyter
-RUN jupyter serverextension enable --py nbserverproxy --sys-prefix
-RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager \
+RUN jupyter serverextension enable --py nbserverproxy --sys-prefix \
+    && jupyter labextension install @jupyter-widgets/jupyterlab-manager \
     @jupyterlab/hub-extension@0.12 \
     @pyviz/jupyterlab_pyviz \
     jupyter-leaflet \
     dask-labextension
+
+# set ownership of HOME and conda env to NB_USER
+USER root
+RUN chown -R ${NB_UID} ${HOME} /opt/conda/envs/pyFIRS
+USER ${NB_USER}
+
+# JUPYTERHUB_USER provided as an argument when the docker image is run
+ARG JUPYTERHUB_USER
+
+# Dask configuration for JupyterHub
+RUN sed -i -e "s|DASK_DASHBOARD_URL|/user/${JUPYTERHUB_USER}/proxy/8787|g" \
+    ${HOME}/binder/jupyterlab-workspace.json \
+    && sed -i -e "s|WORKSPACE_ID|/user/${JUPYTERHUB_USER}/lab|g" \
+    ${HOME}/binder/jupyterlab-workspace.json \
+    && jupyter lab workspaces import ${HOME}/binder/jupyterlab-workspace.json \
+    --NotebookApp.base_url=user/${JUPYTERHUB_USER}
