@@ -73,4 +73,4 @@ USER ${NB_USER}
 
 # JUPYTERHUB_USER provided as an argument when the docker image is run
 ARG JUPYTERHUB_USER
-ENTRYPOINT[${HOME}/binder/start]
+ENTRYPOINT["${HOME}/binder/start"]
