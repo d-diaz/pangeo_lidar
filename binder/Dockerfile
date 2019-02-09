@@ -72,4 +72,4 @@ RUN chown -R ${NB_UID} ${HOME} /opt/conda/envs/pyFIRS
 USER ${NB_USER}
 
 # specify jupyterhub configuration
-ENTRYPOINT['binder/start']
+ENTRYPOINT ./binder/start
