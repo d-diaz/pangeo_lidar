@@ -71,6 +71,13 @@ USER root
 RUN chown -R ${NB_UID} ${HOME} /opt/conda/envs/pyFIRS
 USER ${NB_USER}
 
-# JUPYTERHUB_USER provided as an argument when the docker image is run
-ARG JUPYTERHUB_USER
-ENTRYPOINT["${HOME}/binder/start"]
+# JUPYTERHUB_USER is defined in the host running this image
+ENV JUPYTERHUB_USER $JUPYTERHUB_USER
+
+# Dask configuration for JupyterHub
+RUN sed -i -e "s|DASK_DASHBOARD_URL|/user/${JUPYTERHUB_USER}/proxy/8787|g" \
+    ${HOME}/binder/jupyterlab-workspace.json \
+    && sed -i -e "s|WORKSPACE_ID|/user/${JUPYTERHUB_USER}/lab|g" \
+    ${HOME}/binder/jupyterlab-workspace.json \
+    && jupyter lab workspaces import ${HOME}/binder/jupyterlab-workspace.json \
+    --NotebookApp.base_url=user/${JUPYTERHUB_USER}
