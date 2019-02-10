@@ -3,11 +3,28 @@ channels:
   - conda-forge
 dependencies:
   - dask
+  - dask-kubernetes
+  - distributed
+  - gcsfs
   - geopandas
+  - graphviz
+  - intake::intake-xarray
+  - ipyleaflet
+  - ipywidgets
+  - jupyter
+  - jupyter_client
+  - jupyterlab_launcher
+  - jupyterlab=0.35
+  - lz4
   - matplotlib
+  - nbserverproxy
+  - nodejs
+  - nomkl
+  - numcodecs
   - numpy
   - pandas
   - pdal
+  - python-blosc
   - python-pdal
   - python=3.6
   - rasterio
@@ -17,22 +34,6 @@ dependencies:
   - seaborn
   - shapely
   - xarray
-  - distributed
-  - dask-kubernetes
-  - gcsfs
-  - intake::intake-xarray
   - zarr
-  - numcodecs
-  - python-blosc
-  - lz4
-  - nomkl
-  - nbserverproxy
-  - jupyter
-  - jupyterlab=0.35
-  - jupyterlab_launcher
-  - jupyter_client
-  - ipywidgets
-  - graphviz
-  - nodejs
   - pip:
     - kubernetes
