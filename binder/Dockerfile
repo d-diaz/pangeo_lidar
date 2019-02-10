@@ -71,4 +71,4 @@ USER ${NB_USER}
 
 # specify jupyterhub configuration
 COPY ./binder/start.sh /entrypoint.sh
-# ENTRYPOINT /entrypoint.sh
+ENTRYPOINT ~/binder/start.sh
