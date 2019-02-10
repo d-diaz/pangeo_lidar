@@ -18,8 +18,10 @@ ENV SHELL /bin/bash
 # Configuration required for using Binder
 ARG NB_USER
 ARG NB_UID
-ENV USER {NB_USER}
+ENV NB_USER $NB_USER
 ENV HOME /home/${NB_USER}
+ARG JUPYTERHUB_USER
+ENV JUPYTERHUB_USER $JUPYTERHUB_USER
 
 # create the notebook user
 RUN adduser --disabled-password \
