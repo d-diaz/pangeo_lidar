@@ -17,9 +17,11 @@ dependencies:
   - jupyterlab=0.35
   - lz4
   - matplotlib
+  - nbconvert
   - nbserverproxy
   - nodejs
   - nomkl
+  - notebook
   - numcodecs
   - numpy
   - pandas
@@ -36,4 +38,6 @@ dependencies:
   - xarray
   - zarr
   - pip:
+    - jupyterhub
     - kubernetes
+    - nteract_on_jupyter
