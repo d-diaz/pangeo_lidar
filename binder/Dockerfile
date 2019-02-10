@@ -70,6 +70,3 @@ RUN jupyter serverextension enable --py nbserverproxy --sys-prefix \
 USER root
 RUN chown -R ${NB_UID} ${HOME} /opt/conda/envs/pyFIRS
 USER ${NB_USER}
-
-# specify jupyterhub configuration
-ENTRYPOINT ${HOME}/binder/start
