@@ -89,6 +89,7 @@ ENV PATH ${CONDA_DIR}/bin:$HOME/.local/bin:${PATH}
 
 # Get the contents of our repo added to ${HOME}
 COPY . ${HOME}
+# COPY ./binder ${HOME}/binder
 
 # install conda requirements
 RUN conda config --system --add channels conda-forge \
@@ -112,4 +113,6 @@ RUN chown -R ${NB_USER}:${NB_USER} ${HOME} /opt/conda/envs/
 USER ${NB_USER}
 
 # specify jupyterhub configuration
-ENTRYPOINT ${HOME}/binder/start.sh
+RUN ls -lash ${HOME}/binder/start.sh
+ENTRYPOINT ["/bin/bash"]
+CMD ["~/binder/start.sh"]
