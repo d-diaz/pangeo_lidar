@@ -29,10 +29,8 @@ RUN dpkg --add-architecture i386 \
 # Install LAStools
 RUN wget http://www.cs.unc.edu/~isenburg/lastools/download/LAStools.zip \
     -O lastools.zip \
-    && unzip -q lastools.zip \
-    -x "LAStools/*toolbox/*" "LAStools/example*/*" "LAStools/src/*" \
-    "LAStools/data/*" \
-    -d ${HOME} \
+    && unzip -q lastools.zip -x "LAStools/*toolbox/*" "LAStools/example*/*" \
+    "LAStools/src/*" "LAStools/data/*" -d ${HOME} \
     && rm lastools.zip
 
 # Install FUSION
@@ -55,14 +53,6 @@ ENV PATH /opt/conda/envs/pyFIRS/bin:$PATH
 
 # install pyFIRS in development mode
 RUN pip install --no-cache-dir -e ${HOME}
-
-# pangeo-related configuration for jupyter
-RUN jupyter serverextension enable --py nbserverproxy --sys-prefix \
-    && jupyter labextension install @jupyter-widgets/jupyterlab-manager \
-    @jupyterlab/hub-extension@0.12 \
-    @pyviz/jupyterlab_pyviz \
-    jupyter-leaflet \
-    dask-labextension
 
 # set ownership of HOME and conda env to NB_USER
 USER root
