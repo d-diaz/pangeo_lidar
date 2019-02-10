@@ -66,9 +66,8 @@ RUN jupyter serverextension enable --py nbserverproxy --sys-prefix \
 
 # set ownership of HOME and conda env to NB_USER
 USER root
-RUN chown -R ${NB_USER} ${HOME} /opt/conda/envs/pyFIRS
+RUN chown -R ${NB_USER} ${HOME}/ /opt/conda/envs/pyFIRS/
 USER ${NB_USER}
 
 # specify jupyterhub configuration
-COPY ./binder/start.sh /entrypoint.sh
 ENTRYPOINT ~/binder/start.sh
