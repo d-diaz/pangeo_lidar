@@ -2,13 +2,11 @@ FROM continuumio/miniconda3:4.5.12
 
 # Configuration required for using Binder
 ENV NB_USER jovyan
-ENV NB_UID 1000
 ENV HOME /home/${NB_USER}
 
 # create the notebook user
 RUN adduser --disabled-password \
     --gecos "Default user" \
-    --uid ${NB_UID} \
     ${NB_USER}
 
 # Install some linux tools
@@ -40,7 +38,7 @@ RUN wget http://www.cs.unc.edu/~isenburg/lastools/download/LAStools.zip \
 # Install FUSION
 RUN wget http://forsys.sefs.uw.edu/Software/FUSION/fusionlatest.zip \
     -O fusion.zip \
-    && unzip -q fusion.zip -x "APScripts/*" -d ${HOME} \
+    && unzip -q fusion.zip -x "APScripts/*" -d ${HOME}/fusion \
     && rm fusion.zip
 
 
@@ -68,8 +66,9 @@ RUN jupyter serverextension enable --py nbserverproxy --sys-prefix \
 
 # set ownership of HOME and conda env to NB_USER
 USER root
-RUN chown -R ${NB_UID} ${HOME} /opt/conda/envs/pyFIRS
+RUN chown -R ${NB_USER} ${HOME} /opt/conda/envs/pyFIRS
 USER ${NB_USER}
 
 # specify jupyterhub configuration
-ENTRYPOINT ['~/binder/start.sh']
+COPY ./binder/start.sh /entrypoint.sh
+ENTRYPOINT /entrypoint.sh
