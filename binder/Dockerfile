@@ -115,3 +115,5 @@ USER ${NB_USER}
 # specify jupyterhub configuration
 RUN ls -lash ${HOME}/binder/start.sh
 ENTRYPOINT /bin/bash ${HOME}/binder/start.sh
+CMD jupyter lab workspaces import ${HOME}/binder/jupyterlab-workspace.json \
+    --NotebookApp.base_url=user/${JUPYTERHUB_USER}
