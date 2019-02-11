@@ -20,9 +20,6 @@ ARG NB_USER
 ARG NB_UID
 ENV NB_USER $NB_USER
 ENV HOME /home/${NB_USER}
-ARG JUPYTERHUB_USER
-ENV JUPYTERHUB_USER $JUPYTERHUB_USER
-RUN /bin/bash -c 'echo testing: ${JUPYTERHUB_USER}'
 
 # create the notebook user
 RUN adduser --disabled-password \
@@ -118,4 +115,3 @@ USER ${NB_USER}
 # specify jupyterhub configuration
 RUN ls -lash ${HOME}/binder/start.sh
 ENTRYPOINT /bin/bash ${HOME}/binder/start.sh
-CMD [""]
