@@ -81,7 +81,7 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.12-Linux-x86
     && echo "conda activate base" >> ~/.bashrc
 
 EXPOSE 8888
-ENV APP_BASE /opt
+ENV APP_BASE /srv
 ENV CONDA_DIR ${APP_BASE}/conda
 ENV NB_PYTHON_PREFIX ${CONDA_DIR}
 ENV KERNEL_PYTHON_PREFIX ${NB_PYTHON_PREFIX}
@@ -109,11 +109,9 @@ RUN jupyter serverextension enable nteract_on_jupyter --sys-prefix \
     dask-labextension
 
 USER root
-RUN chown -R ${NB_USER}:${NB_USER} ${HOME} /opt/conda/envs/
+RUN chown -R ${NB_USER}:${NB_USER} ${HOME} /srv/conda/envs/
 USER ${NB_USER}
 
 # specify jupyterhub configuration
 RUN ls -lash ${HOME}/binder/start.sh
 ENTRYPOINT /bin/bash ${HOME}/binder/start.sh
-CMD jupyter lab workspaces import ${HOME}/binder/jupyterlab-workspace.json \
-    --NotebookApp.base_url=user/${JUPYTERHUB_USER}
