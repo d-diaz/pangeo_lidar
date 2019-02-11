@@ -114,5 +114,4 @@ USER ${NB_USER}
 
 # specify jupyterhub configuration
 RUN ls -lash ${HOME}/binder/start.sh
-ENTRYPOINT /bin/bash ${HOME}/binder/start.sh ${JUPYTERHUB_USER}
-CMD [""]
+ENTRYPOINT /bin/bash ${HOME}/binder/start.sh
