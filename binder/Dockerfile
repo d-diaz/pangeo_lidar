@@ -16,8 +16,8 @@ ENV LANGUAGE en_US.UTF-8
 ENV SHELL /bin/bash
 
 # Configuration required for using Binder
-ARG NB_USER
-ARG NB_UID
+ARG NB_USER jovyan
+ARG NB_UID 1000
 ENV NB_USER $NB_USER
 ENV HOME /home/${NB_USER}
 
