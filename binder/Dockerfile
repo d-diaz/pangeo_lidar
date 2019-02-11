@@ -22,7 +22,7 @@ ENV NB_USER $NB_USER
 ENV HOME /home/${NB_USER}
 ARG JUPYTERHUB_USER
 ENV JUPYTERHUB_USER $JUPYTERHUB_USER
-RUN echo ${JUPYTERHUB_USER}
+RUN /bin/bash -c 'echo testing: ${JUPYTERHUB_USER}'
 
 # create the notebook user
 RUN adduser --disabled-password \
